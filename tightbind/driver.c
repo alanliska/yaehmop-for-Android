@@ -667,6 +667,14 @@ void run_bind(char *file_name, bool use_stdin_stdout, char *parm_file_name ){
 
   if(!output_file)fatal("Can't open results file!");
   fprintf(output_file,"#BIND_OUTPUT version: %s\n\n",VERSION_STRING);
+	fprintf(output_file,"#Author: Greg Landrum\n");
+	fprintf(output_file,"#Extensions made by Wingfield Glassey.\n");
+  fprintf(output_file,"#Contributors: Wingfield Glassey, Patrick Avery, Richard Gowers, Geoff Hutchinson, Ricardo Rodriguez, Alexey Kuzmin, Jan-Grimo Sobez\n");
+  fprintf(output_file,"#Special version for Android (aarch64, pie)\n");
+	fprintf(output_file,"#linked with high-performance BLAS and LAPACK libraries\n");
+  fprintf(output_file,"#compiled by Alan Liska & Veronika Ruzickova\n");
+  fprintf(output_file,"#on July 10, 2024.\n");
+  fprintf(output_file," \n");
 
   /********
 
@@ -766,6 +774,14 @@ void run_eht(FILE *outstream ){
   output_file = outstream;
 
   fprintf(output_file,"#BIND_OUTPUT version: %s\n\n",VERSION_STRING);
+	fprintf(output_file,"#Author: Greg Landrum\n");
+	fprintf(output_file,"#Extensions made by Wingfield Glassey.\n");
+  fprintf(output_file,"#Contributors: Wingfield Glassey, Patrick Avery, Richard Gowers, Geoff Hutchinson, Ricardo Rodriguez, Alexey Kuzmin, Jan-Grimo Sobez\n");
+  fprintf(output_file,"#Special version for Android (aarch64, pie)\n");
+	fprintf(output_file,"#linked with high-performance BLAS and LAPACK libraries\n");
+  fprintf(output_file,"#compiled by Alan Liska & Veronika Ruzickova\n");
+  fprintf(output_file,"#on July 10, 2024.\n");
+  fprintf(output_file," \n");
 
   /********
 

@@ -8,7 +8,7 @@
 # to change where the program looks for the extended hueckel parameters
 #   change the following:
 # This is the one for isolobal
-PARM_FILE_LOC = \"/path/to/eht_parms.dat\"
+PARM_FILE_LOC = \"/yaehmop/tightbind/eht_parms.dat\"
 
 # to use floats instead of doubles, insert -DUSE_FLOATS here.
 #  to perform real symmetry analysis (with principle axis location), use
@@ -16,16 +16,17 @@ PARM_FILE_LOC = \"/path/to/eht_parms.dat\"
 #     portions of the meschach libraries installed.
 
 #stripped down with optimization and LAPACK
-CFLAGS =  -DUSE_LAPACK -O3 -I/path/to/tightbind -DEHT_PARM_FILE=$(PARM_FILE_LOC) -DUNDERSCORE_FORTRAN -DANAL_ABOUT_PROTOTYPES -fPIC -pie
+CFLAGS =  -g  -I/usr/local/include/ -DEHT_PARM_FILE=$(PARM_FILE_LOC) -DANAL_ABOUT_PROTOTYPES
 
 # these are the flags that get passed to the fortran compiler
 #F77FLAGS = -g
-F77FLAGS = -O3 -fPIC -pie
+F77FLAGS = -O
 
 #A linux box w/o complib (using GNU compilers)
 #LIBS = -lm -lf2c 
-LIBS = -lm
-LOCALLIBS = /path/to/liblapack.a /path/to/libblas.a
+LIBS = -lm 
+LOCALLIBS = 
+#LOCALLIBS = /usr/lib/x86_64-linux-gnu/lapack/liblapack.a /usr/lib/x86_64-linux-gnu/blas/libblas.a
 
 COBJS = main.o driver.o genutil.o fileio.o globals.o memory.o distance_mat.o \
  R_overlap_mat.o mov.o R_hamil.o K_hamil.o kpoints.o K_overlap_mat.o \
@@ -33,20 +34,20 @@ COBJS = main.o driver.o genutil.o fileio.o globals.o memory.o distance_mat.o \
  transforms.o symmetry.o princ_axes.o avg_props.o DOS_stuff.o COOP_stuff.o \
  Zmat.o bands.o FMO_stuff.o xtal_coords.o matrices.o chg_it.o \
  mod_mulliken.o postprocess.o muller.o geom_frags.o solid_symmetry.o \
- recip_space.o netCDF_support.o 
+ recip_space.o netCDF_support.o lovlap.o abfns.o cboris.o diag.o
 
 
 #F2COBJS = lovlap.f2c.o abfns.f2c.o cboris.f2c.o diag.f2c.o
-FOBJS = lovlap.o abfns.o cboris.o diag.o
+FOBJS =  
 
 all: bind
 
 
 bind: $(COBJS) $(FOBJS) $(LAPACKOBJS)
-	/path/to/cross-gfortran -fPIC -pie -static -o bind $(CFLAGS) $(COBJS) $(FOBJS)  $(LAPACKOBJS) $(LIBS) $(LOCALLIBS)
+	cc -o bind $(CFLAGS) $(COBJS) $(FOBJS)  $(LAPACKOBJS) $(LIBS) $(LOCALLIBS)
 
-# bind.64: $(COBJS) $(FOBJS) $(LAPACKOBJS)
-	# /path/to/cross-gcc -fPIC -pie -static -o bind.64 $(CFLAGS) $(COBJS) $(FOBJS) $(LAPACKOBJS) $(LIBS)
+bind.64: $(COBJS) $(FOBJS) $(LAPACKOBJS)
+	cc -o bind.64 $(CFLAGS) $(COBJS) $(FOBJS) $(LAPACKOBJS) $(LIBS)
 
 install: bind 
 	cp bind ../bin
@@ -65,10 +66,10 @@ veryclean:
 	cd utils;make clean
 
 .f.o: 
-	/path/to/cross-gfortran $(F77FLAGS) -c $*.f
+	f77 $(F77FLAGS) -c $*.f
 
 .c.o: 
-	/path/to/cross-gcc $(CFLAGS) -c $*.c
+	cc $(CFLAGS) -c $*.c
 
 
 fit_progs: $(FIT_PROGS)
